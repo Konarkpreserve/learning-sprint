@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI APP</title>
+</head>
+<body>
+    <h2 style="background-color: black; padding: 30pt; color: rebeccapurple;">ASK AI</h2>
+
+    <input id="ques" placeholder="type your question" style="background-color: #79aa84; border-color: burlywood; color: blue;">
+    <button onclick="askAI()" style="padding: 30pt; color: #3e6d8f; background-color: aliceblue; box-sizing: border-box;">Ask</button>
+
+    <p id="result" style="color: red; background-color: black;"></p>
+
+    <script>
+        async function askAI() {
+            let q=document.getElementById("ques").value;
+            let res=await fetch(`http://127.0.0.1:8000/ask?q=${q}`);
+            let data = await res.json();
+            document.getElementById("result").innerText = data.answer;
+        }
+    </script>
+
+</body>
+</html>
