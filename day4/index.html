@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+</head>
+<body>
+
+    <h2 style="border: 30pt; text-decoration-color: rgb(181, 58, 58); background-color: rgb(159, 112, 197);">AI CHAT N</h2>
+
+    <div id="chat"></div>
+
+    <input id="ques" placeholder="Type Here....">
+    <button onclick="askAI()" style="text-decoration-color: rgb(159, 70, 70); background-color: aqua;">Send</button>
+
+    <script>
+        async function askAI() {
+            let q = document.getElementById("ques").value;
+
+            let chat = document.getElementById("chat");
+
+            if(!q.trim()) return;                                  // prevent empty input
+            
+            chat.innerHTML += `<p><b>Me:</b> ${q}</p>`;            //show user message
+            chat.scrollTop = chat.scrollHeight;
+
+            let loadingId = "loading-" + Date.now();
+            chat.innerHTML += `<p id="${loadingId}"><b>AI:</b> Thinking..... </p>`;
+            chat.scrollTop = chat.scrollHeight;
+
+            let res = await fetch(`http://127.0.0.1:8000/ask?q=${encodeURIComponent(q)}`);
+            let data = await res.json()
+
+            
+            document.getElementById(loadingId).innerHTML = `<b>AI:</b> ${data.answer}`;
+            chat.scrollTop = chat.scrollHeight;
+
+            document.getElementById("ques").value = "";
+
+        }
+    </script>
+    
+</body>
+</html>
