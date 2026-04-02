@@ -51,7 +51,7 @@ async function askAI() {
         
         document.addEventListener("DOMContentLoaded", function(){
             document.getElementById("ques").addEventListener("keypress", function(event){
-                if(event.key==="Enter"){
+                if(event.key === "Enter"){
                     askAI()
                 }
             });
