@@ -26,9 +26,9 @@ async function askAI() {
 
             data.history.forEach(msg => {
                 if(msg.user){
-                    chat.innerHTML += `<p><b>Me:</b> ${msg.user}</p>`
+                    chat.innerHTML += `<p style="color:blue;"><b>Me:</b> ${msg.user}</p>`
                 } else {    
-                    chat.innerHTML += `<p><b>Me:</b> ${msg.ai}</p>`
+                    chat.innerHTML += `<p style="color:green;><b>Me:</b> ${msg.ai}</p>`
                 }
                 
             });
@@ -42,8 +42,17 @@ async function askAI() {
 
             document.getElementById("ques").value = "";
             btn.disabled=false;
-
+            
+            
         }
         function clearChat(){
             document.getElementById("chat").innerHTML = "";
         }
+        
+        document.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("ques").addEventListener("keypress", function(event){
+                if(event.key==="Enter"){
+                    askAI()
+                }
+            });
+        });

@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chat</title>
 </head>
+<link rel="stylesheet" href="style.css">
 <body>
 
-    <h2 style="border: 30pt; text-decoration-color: rgb(181, 58, 58); background-color: rgb(159, 112, 197);">AI CHAT N</h2>
+    <h2>AI CHAT N</h2>
+    <!-- style="border: 30pt; text-decoration-color: rgb(181, 58, 58); background-color: rgb(159, 112, 197); -->
 
-    <div id="chat" style="border: 10pt; background-color: antiquewhite; color: rgb(74, 3, 120); border-width: 3pt;"></div>
+    <div id="chat"></div>
+    <!-- style="border: 10pt; background-color: antiquewhite; color: rgb(74, 3, 120); border-width: 3pt;" -->
 
-    <input id="ques" placeholder="Type Here....">
-    <button onclick="askAI()" id="sendbtn" style="text-decoration-color: rgb(159, 70, 70); background-color: aqua;">Send</button>
-    <button onclick="clearChat()" style="text-decoration-color: rgb(159, 70, 70); background-color: aqua;">Clr Chat</button>
+    <input id="ques" placeholder="Ask anything....">
+    <button onclick="askAI()" id="sendbtn">Send</button>
+    <button onclick="clearChat()">Clr Chat</button>
+    <!-- style="text-decoration-color: rgb(159, 70, 70); background-color: aqua;" -->
 
     
 </body>
