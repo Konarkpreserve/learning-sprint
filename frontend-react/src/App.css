@@ -1,4 +1,4 @@
-.counter {
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -181,4 +181,71 @@
     right: 0;
     border-right-color: var(--border);
   }
+} */
+
+body {
+  background-color: #0f0f0f;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.chat-container {
+  width: 400px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.chat-box {
+  background: #1a1a1a;
+  padding: 10px;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(185, 35, 35, 0.615);
+}
+
+.user {
+  text-align: right;
+  margin: 10px;
+}
+
+.user span {
+  background: black;
+  color: #7c3aed;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #7c3aed;
+}
+
+.ai {
+  text-align: left;
+  margin: 10px;
+}
+
+.ai span {
+  background: black;
+  color: #22c55e;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #22c55e;
+}
+
+.input-box {
+  margin-top: 10px;
+  display: flex;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+button {
+  padding: 10px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
 }
