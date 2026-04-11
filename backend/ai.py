@@ -26,3 +26,6 @@ def get_ai_res(prompt):
     else:
         time.sleep(3)
         return mock_gen(prompt)
+
+
+

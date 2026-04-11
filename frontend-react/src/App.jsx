@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState } from "react";
 import {useEffect, useRef} from "react";
+import ChatBox from "./components/ChatBox";
+import InputBox from "./components/InputBox";
 
 function App() {
 
@@ -13,6 +15,7 @@ function App() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth"});
   }, [messages]);
+
   async function askAI()
   {
     // console.log("sending req", message);
@@ -58,33 +61,16 @@ function App() {
     <div className="chat-container">
       <h2>AI CHAT N</h2>
 
-    <div className="chat-box">
-      {messages.map((msg, index) => (
-        <div key={index} className={msg.role === "user" ? "user" : "ai"} >
-           <span>{msg.text}</span>
-        </div>
-      ))}
-      <div ref={chatEndRef}></div>
+      <ChatBox messages={messages} chatEndRef={chatEndRef} />
+
+      <InputBox
+      message={message}
+      setmessage={setmessage}
+      askAI={askAI}
+      loading={loading}
+      />
     </div>
 
-    <div className="input-box">
-       <input
-       value={message}
-       onChange={(e) => setmessage(e.target.value)}
-       onKeyDown={(e) => {
-        if(e.key == "Enter"){
-          askAI();
-        }
-       }}
-       placeholder="Type Your Thoughts..."
-       />
-
-      <button onClick={askAI} disabled={loading}>{loading ? "..." : "Send"}</button>
-
-      </div>
-
-      {/* <p><b>AI:</b> {response}</p>  */} 
-    </div>
   );
 }
 export default App;
