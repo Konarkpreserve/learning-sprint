@@ -10,52 +10,74 @@ function App() {
   const[loading, setLoading] = useState(false);
   const[message, setmessage]=useState("");
   // const[response, setresponse]=useState("");  only single response
-  const[messages, setMessages]=useState([]);
+  const[messages, setMessages]=useState(() => {
+    const saved = localStorage.getItem("messages");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth"});
   }, [messages]);
+  useEffect(() => {
+    localStorage.setItem("messages", JSON.stringify(messages));
+  }, [messages]);
 
-  async function askAI()
-  {
-    // console.log("sending req", message);
-    if(!message.trim()) return;
-    setLoading(true);
-
-    const newMessages=[...messages, {role: "user", text: message}];
-    setMessages(newMessages)
-
-    setMessages([
-      ...newMessages,
-      {role:"ai", text: "Thinking...."}
-    ]);
-
-    try{
-      let res = await fetch(`http://127.0.0.1:8000/ask?q=${encodeURIComponent(message)}`);
-      // console.log("raw res", res);
-      let data = await res.json();
-      // console.log("data rec", data);
-
-      setMessages([
-        ...newMessages,
-        {role: "ai", text: data.answer}
-      ]);
-      setLoading(false);
-      setmessage("")
-      
-      // setresponse(data.answer);  single response
-      // setmessage("");  
-    } catch (err){
-      // console.log("error", err);
-      // setresponse("err occured");
-      setMessages([
-        ...newMessages,
-        {role: "ai", text: "Err Occured"}
-      ]);
-      setLoading(false);
-
-    }
+  function clearChat() {
+    setMessages([]);
+    localStorage.removeItem("messages");
   }
+
+  async function askAI() {
+
+  if (!message.trim()) return;
+
+  const userMessage = { role: "user", text: message };
+
+  setLoading(true);
+
+  // 1️⃣ Add user message safely
+  setMessages(prev => [...prev, userMessage]);
+
+  // 2️⃣ Add "Thinking..."
+  setMessages(prev => [
+    ...prev,
+    userMessage,
+    { role: "ai", text: "Thinking..." }
+  ]);
+
+  try {
+    let res = await fetch(
+      `http://127.0.0.1:8000/ask?q=${encodeURIComponent(message)}`
+    );
+    let data = await res.json();
+
+    // 3️⃣ Replace last "Thinking..." with real response
+    setMessages(prev => {
+      const updated = [...prev];
+      updated[updated.length - 1] = {
+        role: "ai",
+        text: data.answer
+      };
+      return updated;
+    });
+
+    setMessage("");
+    setLoading(false);
+
+  } catch (err) {
+
+    setMessages(prev => {
+      const updated = [...prev];
+      updated[updated.length - 1] = {
+        role: "ai",
+        text: "Error Occurred"
+      };
+      return updated;
+    });
+
+    setLoading(false);
+  }
+}
 
   return (
     <div className="chat-container">
@@ -69,6 +91,7 @@ function App() {
       askAI={askAI}
       loading={loading}
       />
+      <button onClick={clearChat}>Clear</button>
     </div>
 
   );
